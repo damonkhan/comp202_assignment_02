@@ -5,21 +5,23 @@ class HttpServer
 {
   public static void main(String args[])
   {
-    // test 001
+
+    int portNum = Integer.parseInt(args[0]);
+
+    // test001
     if (args.length != 1)
     {
       System.err.println("Usage: <portnum>");
       return;
     }
 
-    //test 002
-    int portNum = Integer.parseInt(args[0]);
-
+    //test002
     if (portNum < 1024)
     {
       System.err.println("Port number cannot be less than 1024");
       return;
-    }
+    } 
+
 
 
     try
