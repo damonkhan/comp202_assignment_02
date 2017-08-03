@@ -36,6 +36,7 @@ the web-browser. It opens a connection and sends a request message consisting of
 of text, each line separated by a CR/LF pair. The browser signals to the web-server that
 the request message is complete by sending an empty line. Here is an example:
 
+```
 GET /ChatServer.java HTTP/1.1
 Host: localhost:8080
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0)
@@ -44,6 +45,7 @@ Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate
 DNT: 1
 Connection: keep-alive
+```
 
 Only the first line matters for our web server. The first line has a command verb
 (GET), the name of the file being requested (ChatServer.java) and the protocol version
@@ -55,6 +57,7 @@ other file. It is the most commonly used command and the only one you are requir
 to implement. The web-server responds on the same socket as used for the request with
 something that looks like this:
 
+```
 HTTP/1.1 200 OK
 Date: Wed, 03 Aug 2016 17:42:41 GMT
 Server: Apache/2.4.23 (FreeBSD) OpenSSL/1.0.1s-freebsd PHP/5.6.24
@@ -66,6 +69,7 @@ Keep-Alive: timeout=5, max=100
 Connection: Keep-Alive
 Content-Type: text/x-java-source
 <file contents go here>
+```
 
 As before, the first line is the most important. It contains the protocol version
 (HTTP/1.1), a status code (200) and a brief text message explaining the status code
