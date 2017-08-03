@@ -20,7 +20,7 @@ class HttpServer
     {
       System.err.println("Port number cannot be less than 1024");
       return;
-    } 
+    }
 
 
 
@@ -33,5 +33,15 @@ class HttpServer
     {
       System.err.println("Stress: " + e.getMessage());
     }
+  }
+}
+
+class HttpServerSession extends Thread
+{
+  private Socket client;
+
+  public HttpServerSession(Socket client)
+  {
+    client = client;
   }
 }
