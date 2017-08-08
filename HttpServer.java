@@ -1,46 +1,31 @@
 import java.net.*;
 import java.io.*;
 import java.util.*;
-class HttpServer
+
+class HttpServerSession extends Thread
 {
-  public static void main(String args[])
+  private Socket client;
+
+  public HttpServerSession(Socket theClient)
   {
+    client = theClient;
+  }
 
-    /*
-    * TODO uncomment code to
-    * allow users to specify the
-    * port number*/
-
-    int portNum = 8080;
-
-    // test001
-    //if (args.length != 1)
-    //{
-      //System.err.println("Usage: <portnum>");
-      //return;
-    //}
-
-    //test002
-    //if (portNum < 1024)
-    //{
-      //System.err.println("Port number cannot be less than 1024");
-      //return;
-    //}
-
-
+  public void run()
+  {
+   String request = "";
+   String garbage = "";
 
     try
     {
-      ServerSocket server = new ServerSocket(portNum);
-      System.out.println("web server starting");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-      while(true)
+      if (request != null)
       {
-        System.out.println("Server listening on port " + portNum);
-        Socket client = server.accept(); // wait for client to connect
-        HttpServerSession serverSession = new HttpServerSession(client);
-        System.out.println("Connection received.");
+        request = reader.readLine();
+        System.out.println(request);
       }
+
     }
     catch(IOException e)
     {
@@ -49,13 +34,32 @@ class HttpServer
   }
 }
 
-class HttpServerSession extends Thread
+
+class HttpServer
 {
-  private Socket client;
-
-
-  public HttpServerSession(Socket client)
+  public static void main(String args[])
   {
-    client = client;
+    try
+    {
+      int portNum = 8800;
+      ServerSocket server = new ServerSocket(portNum);
+
+      while(true)
+      {
+        System.out.println("Server listening on port" + Integer.toString(portNum));
+        Socket client = server.accept();
+        System.out.println("Connection established: " + client.getInetAddress().getHostAddress());
+        HttpServerSession session = new HttpServerSession(client);
+        session.run();
+
+        client.close();
+        //session.close();
+
+      }
+    }
+    catch(IOException e)
+    {
+      System.err.println("Stress: " + e.getMessage());
+    }
   }
 }
